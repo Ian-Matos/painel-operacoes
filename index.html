@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Painéis Operacionais</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #0b1f3a;
+      color: white;
+      padding: 28px 40px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 25px;
+    }
+
+    .titulo {
+      margin-bottom: 25px;
+    }
+
+    .titulo h2 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .titulo p {
+      color: #64748b;
+    }
+
+    .painel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+    }
+
+    .icone {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: #e8f0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .card p {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .botao {
+      display: inline-block;
+      text-decoration: none;
+      background: #2563eb;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .botao.desativado {
+      background: #94a3b8;
+      cursor: default;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px;
+      color: #94a3b8;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Portal de Painéis Operacionais</h1>
+    <p>Acesso centralizado aos painéis e indicadores das operações.</p>
+  </header>
+
+  <main>
+
+    <div class="titulo">
+      <h2>Painéis disponíveis</h2>
+      <p>Selecione uma operação para acessar o respectivo painel.</p>
+    </div>
+
+    <div class="painel-grid">
+
+      <div class="card">
+        <div class="icone">📊</div>
+        <h3>Reconquista</h3>
+        <p>Painéis, indicadores, mailing e análises da operação Reconquista.</p>
+        <span class="botao desativado">Em breve</span>
+      </div>
+
+      <div class="card">
+        <div class="icone">📞</div>
+        <h3>Televendas</h3>
+        <p>Indicadores, resultados, mailing e acompanhamento da operação de Televendas.</p>
+        <span class="botao desativado">Em breve</span>
+      </div>
+
+      <div class="card">
+        <div class="icone">❤</div>
+        <h3>Meu+ Saúde</h3>
+        <p>Acompanhamento de agendamentos, motivos, resultados e indicadores.</p>
+        <span class="botao desativado">Em breve</span>
+      </div>
+
+      <div class="card">
+        <div class="icone">📈</div>
+        <h3>Landing Page</h3>
+        <p>Resultados, conversões e indicadores relacionados às Landing Pages.</p>
+        <span class="botao desativado">Em breve</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    Portal de Painéis Operacionais
+  </footer>
+
+</body>
+</html>
