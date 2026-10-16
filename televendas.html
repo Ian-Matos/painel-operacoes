@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Televendas | Portal de Painéis</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #0b1f3a;
+      color: white;
+      padding: 26px 40px;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .voltar {
+      display: inline-block;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .voltar:hover {
+      color: white;
+    }
+
+    header h1 {
+      font-size: 30px;
+      margin-bottom: 7px;
+    }
+
+    header p {
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 42px auto;
+      padding: 0 25px;
+    }
+
+    .titulo {
+      margin-bottom: 28px;
+    }
+
+    .titulo h2 {
+      font-size: 23px;
+      margin-bottom: 7px;
+    }
+
+    .titulo p {
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .painel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 26px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+    }
+
+    .icone {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: #e8f0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      font-size: 19px;
+      margin-bottom: 9px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      min-height: 42px;
+    }
+
+    .botao {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      padding: 10px 17px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .botao:hover {
+      background: #1d4ed8;
+    }
+
+    .desativado {
+      background: #94a3b8;
+      cursor: default;
+    }
+
+    .desativado:hover {
+      background: #94a3b8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px;
+      color: #94a3b8;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="voltar">← Voltar ao Portal</a>
+
+      <h1>Televendas</h1>
+
+      <p>
+        Painéis, indicadores e ferramentas de apoio à operação.
+      </p>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="titulo">
+      <h2>Painéis de Televendas</h2>
+      <p>
+        Selecione uma visão para acessar os indicadores e ferramentas disponíveis.
+      </p>
+    </div>
+
+    <div class="painel-grid">
+
+      <div class="card">
+        <div class="icone">👥</div>
+        <h3>Perfis de Mailing</h3>
+        <p>
+          Análise dos perfis, volumes, histórico de conversão e montagem de combos.
+        </p>
+
+        <a href="televendas-perfis.html" class="botao">
+          Acessar painel
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="icone">🔄</div>
+        <h3>Portabilidade</h3>
+        <p>
+          Visões e indicadores relacionados às campanhas de portabilidade.
+        </p>
+
+        <span class="botao desativado">
+          Em breve
+        </span>
+      </div>
+
+      <div class="card">
+        <div class="icone">📊</div>
+        <h3>Acompanhamento Mercantil</h3>
+        <p>
+          Indicadores de produção, vendas, efetividade e acompanhamento da operação.
+        </p>
+
+        <span class="botao desativado">
+          Em breve
+        </span>
+      </div>
+
+      <div class="card">
+        <div class="icone">🔻</div>
+        <h3>Funis</h3>
+        <p>
+          Funis de mailing, contatos, efetividade, propostas e resultados.
+        </p>
+
+        <span class="botao desativado">
+          Em breve
+        </span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    Portal de Painéis Operacionais • Televendas
+  </footer>
+
+</body>
+</html>
