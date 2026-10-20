@@ -346,6 +346,54 @@ function simExport(){const m=selected();if(!m)return;const r=simCalculate(m),p=s
 
 render();
 
+(async function carregarBaseCompartilhada() {
+  try {
+    const resposta = await fetch(
+      'dados-faturamento-televenda.xlsx?v=' + Date.now(),
+      { cache: 'no-store' }
+    );
+
+    if (!resposta.ok) {
+      throw new Error('Erro ao buscar a base: HTTP ' + resposta.status);
+    }
+
+    const blob = await resposta.blob();
+
+    const arquivo = new File(
+      [blob],
+      'dados-faturamento-televenda.xlsx',
+      {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      }
+    );
+
+    const dados = await parseUploaded(arquivo);
+
+    overrides[dados.id] = dados;
+    months = BASES.map(x => overrides[x.id] || x);
+    disabled = disabled.filter(x => x !== dados.id);
+
+    state.month = dados.id;
+    state.start = '';
+    state.end = '';
+
+    render();
+
+    console.log(
+      'Base compartilhada carregada:',
+      dados.label,
+      dados.source
+    );
+
+  } catch (erro) {
+    console.error('Falha ao carregar base compartilhada:', erro);
+
+    toast(
+      'Não foi possível carregar a base compartilhada. Mantendo os dados disponíveis no painel.'
+    );
+  }
+})();;
+
 </script>
 </body>
 </html>
