@@ -225,7 +225,7 @@ async function parseUploaded(file){const zip=await JSZip.loadAsync(file);const p
  if(!billPa)billPa=pa;if(!commission)commission=billPa*rate;
  let daily=rows.filter(([r,v])=>r>19).map(([,v])=>({date:excelDate(v[1]),pa:xlsNum(v[idxPa]),planpa:xlsNum(v[idxPlan])||contracted,loggedH:xlsNum(v[idxLogged])*24,totalH:xlsNum(v[idxTotal])*24,improdH:xlsNum(v[idxImp])*24,prodH:xlsNum(v[idxProd])*24,plannedH:xlsNum(v[prev])*24})).filter(x=>x.date?.startsWith(iso)&&(x.pa>0||x.prodH>0));
  const operators=new Map;for(const [name,field] of [['OPERADOR_ LOGADO TOTAL','loggedH'],['OPERADOR_ PRODUTIVO','prodH'],['OPERADOR_ IMPRODUTIVO','improdH']]){if(!map[name])continue;const rr=await readSheet(zip,map[name],shared),head=rr.find(([r])=>r===3)?.[1]||{},dates=Object.entries(head).filter(([i])=>+i>=3).map(([i,value])=>[i,excelDate(value)]);for(const [rn,values] of rr){if(rn<4||!String(values[1]||'').trim())continue;let nm=String(values[1]).trim().toUpperCase();let op=operators.get(nm)||{name:nm,days:{}};for(const [i,date] of dates){if(date?.startsWith(iso)&&xlsNum(values[i])>0){op.days[date]??={};op.days[date][field]=xlsNum(values[i])*24}}operators.set(nm,op)}}
- let pauseMap=new Map,source=map['MERCANTIL - Relatório de Jorn']||map['Relatório - Olos'];if(source){const eventRows=await readSheet(zip,source,shared);const seen=new Set;for(const [r,v] of eventRows){if(r<6||String(v[12]||'').toUpperCase().trim()!=='TLVD'||String(v[14]||'').toLowerCase().trim()!=='pausa')continue;const date=excelDate(v[4]),name=String(v[10]||'').trim().toUpperCase(),category=String(v[15]||'').trim(),minutes=xlsNum(v[22])*1440;if(!date?.startsWith(iso)||!name||!category||minutes<0||minutes>720)continue;const uniqueness=[date,name,v[17],v[18],category,minutes.toFixed(4)].join('|');if(seen.has(uniqueness))continue;seen.add(uniqueness);const groupKey=[date,name,category].join('|');let a=pauseMap.get(groupKey)||{date,name,category,minutes:0,count:0};a.minutes+=minutes;a.count++;pauseMap.set(groupKey,a)}}
+ let pauseMap=new Map,source=map['MERCANTIL - Relatório de Jorn']||map['Relatório - Olos'];if(source){const eventRows=await readSheet(zip,source,shared);const seen=new Set;for(const [r,v] of eventRows){if(r<6||String(v[12]||'').toUpperCase().trim()!=='RECONQUISTA'||String(v[14]||'').toLowerCase().trim()!=='pausa')continue;continue;const date=excelDate(v[4]),name=String(v[10]||'').trim().toUpperCase(),category=String(v[15]||'').trim(),minutes=xlsNum(v[22])*1440;if(!date?.startsWith(iso)||!name||!category||minutes<0||minutes>720)continue;const uniqueness=[date,name,v[17],v[18],category,minutes.toFixed(4)].join('|');if(seen.has(uniqueness))continue;seen.add(uniqueness);const groupKey=[date,name,category].join('|');let a=pauseMap.get(groupKey)||{date,name,category,minutes:0,count:0};a.minutes+=minutes;a.count++;pauseMap.set(groupKey,a)}}
  let label=String(raw[4]?.[1]||''),notes=[];if(label.toUpperCase().includes('RECONQUISTA'))notes.push('A aba RESUMO_ está identificada internamente como RECONQUISTA, apesar do arquivo enviado como Televendas.');if(Math.abs(pa-billPa)>.01)notes.push('PA produtiva do resumo diverge da PA financeira; ambas foram mantidas da origem.');if(key==='out')notes.push(`Última data de produção da planilha: ${daily.at(-1)?.date||'não disponível'}. Os dias futuros zerados não entram como realizado.`);
  return {id:key,label:['Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro'][monthNumber-3],month:iso,source:file.name,internalLabel:label,contracted,actualPa:pa,billingPa:billPa,du,plannedTimeH:pTime,productiveTimeH:prodTime,gapH:gap,rate,commission,daily,operators:[...operators.values()],pauses:[...pauseMap.values()],partial:key==='mar'||key==='out',notes};
 }
@@ -346,6 +346,53 @@ function simExport(){const m=selected();if(!m)return;const r=simCalculate(m),p=s
 
 render();
 
+(async function carregarBaseCompartilhada() {
+  try {
+    const resposta = await fetch(
+      'dados-faturamento-reconquista.xlsx?v=' + Date.now(),
+      { cache: 'no-store' }
+    );
+
+    if (!resposta.ok) {
+      throw new Error('Erro ao buscar a base: HTTP ' + resposta.status);
+    }
+
+    const blob = await resposta.blob();
+
+    const arquivo = new File(
+      [blob],
+      'dados-faturamento-reconquista.xlsx',
+      {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      }
+    );
+
+    const dados = await parseUploaded(arquivo);
+
+    overrides[dados.id] = dados;
+    months = BASES.map(x => overrides[x.id] || x);
+    disabled = disabled.filter(x => x !== dados.id);
+
+    state.month = dados.id;
+    state.start = '';
+    state.end = '';
+
+    render();
+
+    console.log(
+      'Base compartilhada Reconquista carregada:',
+      dados.label,
+      dados.source
+    );
+
+  } catch (erro) {
+    console.error('Falha ao carregar base compartilhada Reconquista:', erro);
+
+    toast(
+      'Não foi possível carregar a base compartilhada. Mantendo os dados disponíveis no painel.'
+    );
+  }
+})();
 </script>
 </body>
 </html>
