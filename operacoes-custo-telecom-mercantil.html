@@ -2233,6 +2233,38 @@ aplicar(EMBUTIDO, 'CUSTO_TELECOM.xlsb (embutido)');
   }
   document.getElementById('btnExcel').addEventListener('click', exportarExcel);
   document.getElementById('btnPng').addEventListener('click', exportarPng);
+(async function carregarBaseCompartilhadaCusto() {
+  try {
+    const resposta = await fetch(
+      'dados-custo-telecom-mercantil.xlsb?v=' + Date.now(),
+      { cache: 'no-store' }
+    );
+
+    if (!resposta.ok) {
+      throw new Error('HTTP ' + resposta.status);
+    }
+
+    let texto = await resposta.text();
+    texto = texto.replace(/^\uFEFF/, '');
+
+    carregarTexto(texto, 'dados-custo-telecom-mercantil.xlsb');
+
+    console.log(
+      'Base compartilhada Custo Telecom Mercantil carregada.'
+    );
+
+  } catch (erro) {
+    console.error(
+      'Falha ao carregar base compartilhada Custo Telecom Mercantil:',
+      erro
+    );
+
+    status(
+      '<span class="erro">Não foi possível carregar a base compartilhada.</span> Mantendo os dados disponíveis no painel.'
+    );
+  }
+})();
+  
 })();
 </script>
 
