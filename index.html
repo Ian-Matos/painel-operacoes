@@ -3,175 +3,1649 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal de Painéis Operacionais</title>
+  <meta name="theme-color" content="#0b5cff">
+
+  <title>Portal Operacional</title>
 
   <style>
+    :root {
+      --primary: #0b5cff;
+      --primary-dark: #0644c7;
+      --primary-soft: #eaf2ff;
+
+      --navy: #0b1f3a;
+      --navy-soft: #152b4c;
+
+      --bg: #f5f8fc;
+      --surface: #ffffff;
+      --surface-soft: #f9fbfe;
+
+      --text: #172033;
+      --muted: #6b7a90;
+
+      --line: #e4eaf2;
+
+      --success: #16a36a;
+      --success-soft: #e7f8f1;
+
+      --warning: #d98b00;
+      --warning-soft: #fff6dd;
+
+      --shadow:
+        0 14px 40px rgba(21, 45, 82, 0.08);
+
+      --shadow-hover:
+        0 22px 55px rgba(11, 92, 255, 0.14);
+
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+
+      --max-width: 1320px;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background: #f4f7fb;
-      color: #172033;
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(11, 92, 255, 0.08),
+          transparent 32%
+        ),
+        var(--bg);
+
+      color: var(--text);
+
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+      padding-bottom: 40px;
     }
 
-    header {
-      background: #0b1f3a;
-      color: white;
-      padding: 28px 40px;
+    button,
+    input {
+      font: inherit;
     }
 
-    header h1 {
-      font-size: 28px;
-      margin-bottom: 6px;
+    a {
+      color: inherit;
     }
 
-    header p {
-      color: #cbd5e1;
-      font-size: 14px;
+    /* =========================
+       TOPO
+    ========================= */
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+
+      height: 76px;
+
+      display: flex;
+      align-items: center;
+
+      background:
+        rgba(255, 255, 255, 0.88);
+
+      backdrop-filter: blur(18px);
+
+      border-bottom:
+        1px solid rgba(228, 234, 242, 0.9);
     }
 
-    main {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 25px;
-    }
+    .topbar-inner {
+      width: 100%;
+      max-width: var(--max-width);
 
-    .titulo {
-      margin-bottom: 25px;
-    }
+      margin: 0 auto;
+      padding: 0 28px;
 
-    .titulo h2 {
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-    .titulo p {
-      color: #64748b;
-    }
-
-    .painel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 20px;
     }
 
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 25px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.10);
-    }
-
-    .icone {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      background: #e8f0ff;
+    .brand {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 23px;
-      margin-bottom: 18px;
+      gap: 13px;
+
+      text-decoration: none;
     }
 
-    .card h3 {
-      margin-bottom: 8px;
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+
+      border-radius: 14px;
+
+      display: grid;
+      place-items: center;
+
+      background:
+        linear-gradient(
+          145deg,
+          var(--primary),
+          #4085ff
+        );
+
+      color: white;
+
+      font-size: 17px;
+      font-weight: 900;
+
+      box-shadow:
+        0 8px 22px rgba(11, 92, 255, 0.25);
+    }
+
+    .brand-text strong {
+      display: block;
+
+      font-size: 15px;
+      letter-spacing: -0.2px;
+    }
+
+    .brand-text span {
+      display: block;
+
+      margin-top: 2px;
+
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .top-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .today {
+      padding: 9px 13px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 999px;
+
+      background: var(--surface);
+
+      color: var(--muted);
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .profile {
+      width: 40px;
+      height: 40px;
+
+      border-radius: 50%;
+
+      display: grid;
+      place-items: center;
+
+      background: var(--navy);
+
+      color: white;
+
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    /* =========================
+       CONTEÚDO
+    ========================= */
+
+    .app {
+      width: 100%;
+      max-width: var(--max-width);
+
+      margin: 0 auto;
+
+      padding:
+        42px 28px
+        70px;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+
+      min-height: 245px;
+
+      padding: 38px;
+
+      border-radius: var(--radius-xl);
+
+      display: flex;
+      align-items: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          #0b1f3a 0%,
+          #0c326e 55%,
+          #0b5cff 130%
+        );
+
+      color: white;
+
+      box-shadow:
+        0 22px 55px rgba(11, 31, 58, 0.18);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+
+      position: absolute;
+
+      border-radius: 50%;
+
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 360px;
+      height: 360px;
+
+      right: -120px;
+      top: -190px;
+
+      background:
+        rgba(255, 255, 255, 0.07);
+    }
+
+    .hero::after {
+      width: 230px;
+      height: 230px;
+
+      right: 90px;
+      bottom: -170px;
+
+      background:
+        rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+
+      max-width: 690px;
+    }
+
+    .hello {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      margin-bottom: 15px;
+
+      padding:
+        7px 11px;
+
+      border:
+        1px solid rgba(255, 255, 255, 0.18);
+
+      border-radius: 999px;
+
+      background:
+        rgba(255, 255, 255, 0.08);
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      max-width: 620px;
+
+      font-size:
+        clamp(30px, 4vw, 48px);
+
+      line-height: 1.05;
+
+      letter-spacing: -1.6px;
+    }
+
+    .hero p {
+      max-width: 620px;
+
+      margin-top: 15px;
+
+      color:
+        rgba(255, 255, 255, 0.74);
+
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* =========================
+       BUSCA
+    ========================= */
+
+    .search-wrap {
+      position: relative;
+      z-index: 5;
+
+      max-width: 850px;
+
+      margin:
+        -28px auto
+        0;
+
+      padding:
+        0 18px;
+    }
+
+    .search-box {
+      min-height: 66px;
+
+      display: flex;
+      align-items: center;
+
+      padding:
+        8px 10px
+        8px 20px;
+
+      gap: 12px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 20px;
+
+      background: white;
+
+      box-shadow:
+        0 16px 40px rgba(21, 45, 82, 0.13);
+    }
+
+    .search-icon {
+      width: 23px;
+      height: 23px;
+
+      flex: 0 0 auto;
+
+      color: var(--muted);
+    }
+
+    .search-box input {
+      flex: 1;
+
+      min-width: 0;
+
+      border: 0;
+      outline: 0;
+
+      background: transparent;
+
+      color: var(--text);
+
+      font-size: 14px;
+    }
+
+    .search-box input::placeholder {
+      color: #98a5b8;
+    }
+
+    .clear-search {
+      display: none;
+
+      width: 40px;
+      height: 40px;
+
+      border: 0;
+
+      border-radius: 12px;
+
+      background: var(--bg);
+
+      color: var(--muted);
+
+      cursor: pointer;
+
       font-size: 18px;
     }
 
-    .card p {
-      color: #64748b;
-      font-size: 14px;
-      line-height: 1.5;
+    /* =========================
+       CABEÇALHO DA SEÇÃO
+    ========================= */
+
+    .section-header {
+      margin-top: 52px;
       margin-bottom: 20px;
+
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      gap: 20px;
     }
 
-    .botao {
-      display: inline-block;
+    .section-header small {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: var(--primary);
+
+      font-size: 11px;
+      font-weight: 800;
+
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+    }
+
+    .section-header h2 {
+      font-size: 24px;
+      letter-spacing: -0.7px;
+    }
+
+    .section-header p {
+      margin-top: 4px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    .count {
+      padding:
+        7px 11px;
+
+      border-radius: 999px;
+
+      background: var(--primary-soft);
+
+      color: var(--primary);
+
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    /* =========================
+       GRID
+    ========================= */
+
+    .grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 18px;
+    }
+
+    /* =========================
+       CARDS
+    ========================= */
+
+    .card {
+      position: relative;
+      overflow: hidden;
+
+      min-height: 245px;
+
+      padding: 25px;
+
+      display: flex;
+      flex-direction: column;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: var(--radius-lg);
+
+      background: var(--surface);
+
+      box-shadow: var(--shadow);
+
+      transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
+
       text-decoration: none;
-      background: #2563eb;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-size: 14px;
     }
 
-    .botao.desativado {
-      background: #94a3b8;
-      cursor: default;
+    .card.active {
+      cursor: pointer;
     }
+
+    .card.active:hover {
+      transform:
+        translateY(-5px);
+
+      border-color:
+        rgba(11, 92, 255, 0.25);
+
+      box-shadow:
+        var(--shadow-hover);
+    }
+
+    .card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 150px;
+      height: 150px;
+
+      right: -85px;
+      bottom: -85px;
+
+      border-radius: 50%;
+
+      background:
+        var(--primary-soft);
+
+      opacity: 0.75;
+
+      transition:
+        transform 0.25s ease;
+    }
+
+    .card.active:hover::after {
+      transform:
+        scale(1.15);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      gap: 14px;
+    }
+
+    .icon-box {
+      width: 52px;
+      height: 52px;
+
+      flex: 0 0 auto;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px;
+
+      background: var(--primary-soft);
+
+      color: var(--primary);
+    }
+
+    .icon-box svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .status {
+      padding:
+        6px 9px;
+
+      border-radius: 999px;
+
+      font-size: 10px;
+      font-weight: 800;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status::before {
+      content: "";
+
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background:
+        currentColor;
+    }
+
+    .status.online {
+      background:
+        var(--success-soft);
+
+      color:
+        var(--success);
+    }
+
+    .status.soon {
+      background:
+        var(--warning-soft);
+
+      color:
+        var(--warning);
+    }
+
+    .card-body {
+      position: relative;
+      z-index: 2;
+
+      margin-top: 22px;
+
+      flex: 1;
+    }
+
+    .card h3 {
+      font-size: 21px;
+      letter-spacing: -0.5px;
+    }
+
+    .card p {
+      max-width: 500px;
+
+      margin-top: 8px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .card-bottom {
+      position: relative;
+      z-index: 2;
+
+      margin-top: 24px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+    }
+
+    .open-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      color: var(--primary);
+
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .open-link svg {
+      width: 17px;
+      height: 17px;
+
+      transition:
+        transform 0.2s ease;
+    }
+
+    .card.active:hover
+    .open-link svg {
+      transform:
+        translateX(4px);
+    }
+
+    .disabled-label {
+      color: #9aa7b8;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       CARD OPERAÇÕES EM DESTAQUE
+    ========================= */
+
+    .card.operacoes {
+      background:
+        linear-gradient(
+          145deg,
+          #ffffff,
+          #f2f7ff
+        );
+    }
+
+    .card.operacoes
+    .icon-box {
+      background: var(--navy);
+
+      color: white;
+    }
+
+    /* =========================
+       SEM RESULTADOS
+    ========================= */
+
+    .no-results {
+      display: none;
+
+      margin-top: 18px;
+
+      padding: 35px 20px;
+
+      text-align: center;
+
+      border:
+        1px dashed #cfd9e6;
+
+      border-radius: var(--radius-lg);
+
+      background:
+        rgba(255, 255, 255, 0.65);
+
+      color: var(--muted);
+    }
+
+    .no-results strong {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: var(--text);
+    }
+
+    /* =========================
+       RODAPÉ
+    ========================= */
 
     footer {
-      text-align: center;
-      padding: 35px;
-      color: #94a3b8;
-      font-size: 13px;
+      max-width: var(--max-width);
+
+      margin: 0 auto;
+
+      padding:
+        0 28px
+        25px;
+
+      color: #96a4b7;
+
+      font-size: 11px;
+
+      display: flex;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    /* =========================
+       MOBILE BOTTOM NAV
+    ========================= */
+
+    .mobile-nav {
+      display: none;
+    }
+
+    /* =========================
+       RESPONSIVIDADE
+    ========================= */
+
+    @media (max-width: 760px) {
+
+      body {
+        padding-bottom: 90px;
+      }
+
+      .topbar {
+        height: 67px;
+      }
+
+      .topbar-inner {
+        padding:
+          0 17px;
+      }
+
+      .brand-logo {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 12px;
+      }
+
+      .brand-text span {
+        display: none;
+      }
+
+      .today {
+        display: none;
+      }
+
+      .app {
+        padding:
+          22px 16px
+          45px;
+      }
+
+      .hero {
+        min-height: 250px;
+
+        padding:
+          28px 23px
+          44px;
+
+        border-radius: 22px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+        letter-spacing: -1px;
+      }
+
+      .hero p {
+        font-size: 13px;
+      }
+
+      .search-wrap {
+        margin-top: -25px;
+
+        padding:
+          0 10px;
+      }
+
+      .search-box {
+        min-height: 58px;
+
+        border-radius: 17px;
+      }
+
+      .section-header {
+        margin-top: 40px;
+      }
+
+      .section-header h2 {
+        font-size: 21px;
+      }
+
+      .section-header p {
+        font-size: 12px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+      }
+
+      .card {
+        min-height: 220px;
+
+        padding: 21px;
+
+        border-radius: 18px;
+      }
+
+      .card h3 {
+        font-size: 19px;
+      }
+
+      footer {
+        display: none;
+      }
+
+      .mobile-nav {
+        position: fixed;
+
+        z-index: 100;
+
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+
+        height: 68px;
+
+        display: grid;
+
+        grid-template-columns:
+          repeat(3, 1fr);
+
+        padding:
+          7px 8px;
+
+        border:
+          1px solid var(--line);
+
+        border-radius: 20px;
+
+        background:
+          rgba(255, 255, 255, 0.94);
+
+        backdrop-filter:
+          blur(18px);
+
+        box-shadow:
+          0 15px 45px rgba(17, 40, 75, 0.18);
+      }
+
+      .mobile-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        gap: 3px;
+
+        border-radius: 14px;
+
+        color: var(--muted);
+
+        text-decoration: none;
+
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .mobile-nav a.active {
+        background:
+          var(--primary-soft);
+
+        color:
+          var(--primary);
+      }
+
+      .mobile-nav svg {
+        width: 20px;
+        height: 20px;
+      }
     }
   </style>
 </head>
 
-<body>
+<body id="top">
 
-  <header>
-    <h1>Portal de Painéis Operacionais</h1>
-    <p>Acesso centralizado aos painéis e indicadores das operações.</p>
+  <!-- TOPO -->
+  <header class="topbar">
+    <div class="topbar-inner">
+
+      <a class="brand" href="index.html">
+        <div class="brand-logo">PO</div>
+
+        <div class="brand-text">
+          <strong>Portal Operacional</strong>
+          <span>Central de painéis e indicadores</span>
+        </div>
+      </a>
+
+      <div class="top-info">
+        <div class="today" id="today">
+          Carregando data...
+        </div>
+
+        <div class="profile">
+          IM
+        </div>
+      </div>
+
+    </div>
   </header>
 
-  <main>
 
-    <div class="titulo">
-      <h2>Painéis disponíveis</h2>
-      <p>Selecione uma operação para acessar o respectivo painel.</p>
+  <main class="app">
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="hello">
+          <span>●</span>
+          <span id="greeting">Bem-vindo</span>
+        </div>
+
+        <h1>
+          Seus painéis em um só lugar.
+        </h1>
+
+        <p>
+          Acesse indicadores, resultados, custos e análises
+          das operações através de uma experiência centralizada.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- BUSCA -->
+    <div class="search-wrap">
+
+      <div class="search-box">
+
+        <svg
+          class="search-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M20 20l-3.5-3.5"></path>
+        </svg>
+
+        <input
+          id="search"
+          type="text"
+          placeholder="Buscar painel, operação ou indicador..."
+          autocomplete="off"
+        >
+
+        <button
+          class="clear-search"
+          id="clearSearch"
+          aria-label="Limpar busca"
+        >
+          ×
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="painel-grid">
 
-      <div class="card">
-        <div class="icone">📊</div>
-        <h3>Reconquista</h3>
-        <p>Painéis, indicadores, mailing e análises da operação Reconquista.</p>
-        <a class="botao" href="reconquista.html">Acessar painel</a>
+    <!-- PAINÉIS -->
+    <section id="paineis">
+
+      <div class="section-header">
+
+        <div>
+          <small>Central operacional</small>
+
+          <h2>Painéis disponíveis</h2>
+
+          <p>
+            Selecione uma operação para acessar seus indicadores.
+          </p>
+        </div>
+
+        <span class="count" id="panelCount">
+          4 painéis
+        </span>
+
       </div>
 
-      <div class="card">
-        <div class="icone">📞</div>
-        <h3>Televendas</h3>
-        <p>Indicadores, resultados, mailing e acompanhamento da operação de Televendas.</p>
-        <a class="botao" href="televendas.html"">Acessar painel</a>
+
+      <div class="grid" id="panelGrid">
+
+        <!-- RECONQUISTA -->
+        <a
+          class="card active"
+          href="reconquista.html"
+          data-search="
+            reconquista
+            mailing
+            indicadores
+            portabilidade
+            salário
+            resultados
+          "
+        >
+
+          <div class="card-top">
+
+            <div class="icon-box">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M4 19V9"></path>
+                <path d="M10 19V5"></path>
+                <path d="M16 19v-7"></path>
+                <path d="M22 19H2"></path>
+              </svg>
+
+            </div>
+
+            <span class="status online">
+              Disponível
+            </span>
+
+          </div>
+
+          <div class="card-body">
+
+            <h3>Reconquista</h3>
+
+            <p>
+              Mailing, resultados, indicadores e análises
+              da operação Reconquista.
+            </p>
+
+          </div>
+
+          <div class="card-bottom">
+
+            <span class="open-link">
+              Abrir painel
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- TELEVENDAS -->
+        <a
+          class="card active"
+          href="televendas.html"
+          data-search="
+            televendas
+            vendas
+            mailing
+            indicadores
+            resultados
+            performance
+          "
+        >
+
+          <div class="card-top">
+
+            <div class="icon-box">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="
+                    M22 16.92v3a2 2 0 0 1-2.18 2
+                    19.79 19.79 0 0 1-8.63-3.07
+                    19.5 19.5 0 0 1-6-6
+                    19.79 19.79 0 0 1-3.07-8.67
+                    A2 2 0 0 1 4.11 2h3
+                    a2 2 0 0 1 2 1.72
+                    12.84 12.84 0 0 0 .7 2.81
+                    2 2 0 0 1-.45 2.11
+                    L8.09 9.91
+                    a16 16 0 0 0 6 6
+                    l1.27-1.27
+                    a2 2 0 0 1 2.11-.45
+                    12.84 12.84 0 0 0 2.81.7
+                    A2 2 0 0 1 22 16.92z
+                  "
+                ></path>
+              </svg>
+
+            </div>
+
+            <span class="status online">
+              Disponível
+            </span>
+
+          </div>
+
+          <div class="card-body">
+
+            <h3>Televendas</h3>
+
+            <p>
+              Performance, mailing, resultados e acompanhamento
+              da operação de Televendas.
+            </p>
+
+          </div>
+
+          <div class="card-bottom">
+
+            <span class="open-link">
+              Abrir painel
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- OPERAÇÕES -->
+        <a
+          class="card active operacoes"
+          href="operacoes.html"
+          data-search="
+            operações
+            operacoes
+            custo
+            telecom
+            faturamento
+            consolidados
+            mercantil
+          "
+        >
+
+          <div class="card-top">
+
+            <div class="icon-box">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M3 21h18"></path>
+                <path d="M6 21V7l6-4 6 4v14"></path>
+                <path d="M9 9h2"></path>
+                <path d="M13 9h2"></path>
+                <path d="M9 13h2"></path>
+                <path d="M13 13h2"></path>
+                <path d="M10 21v-4h4v4"></path>
+              </svg>
+
+            </div>
+
+            <span class="status online">
+              Disponível
+            </span>
+
+          </div>
+
+          <div class="card-body">
+
+            <h3>Operações</h3>
+
+            <p>
+              Custos, faturamento e indicadores consolidados
+              das operações Mercantil.
+            </p>
+
+          </div>
+
+          <div class="card-bottom">
+
+            <span class="open-link">
+              Abrir painel
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- MEU+ SAÚDE -->
+        <div
+          class="card"
+          data-search="
+            meu saúde
+            meu+ saúde
+            saude
+            agendamentos
+            indicadores
+          "
+        >
+
+          <div class="card-top">
+
+            <div class="icon-box">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="
+                    M20.8 4.6
+                    a5.5 5.5 0 0 0-7.8 0
+                    L12 5.6
+                    l-1-1
+                    a5.5 5.5 0 0 0-7.8 7.8
+                    l1 1L12 21
+                    l7.8-7.6
+                    1-1
+                    a5.5 5.5 0 0 0 0-7.8z
+                  "
+                ></path>
+              </svg>
+
+            </div>
+
+            <span class="status soon">
+              Em breve
+            </span>
+
+          </div>
+
+          <div class="card-body">
+
+            <h3>Meu+ Saúde</h3>
+
+            <p>
+              Acompanhamento de agendamentos, motivos,
+              resultados e indicadores.
+            </p>
+
+          </div>
+
+          <div class="card-bottom">
+
+            <span class="disabled-label">
+              Painel em desenvolvimento
+            </span>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="card">
-        <div class="icone">❤</div>
-        <h3>Meu+ Saúde</h3>
-        <p>Acompanhamento de agendamentos, motivos, resultados e indicadores.</p>
-        <span class="botao desativado">Em breve</span>
+
+      <div
+        class="no-results"
+        id="noResults"
+      >
+        <strong>
+          Nenhum painel encontrado
+        </strong>
+
+        Tente pesquisar por outro termo.
       </div>
 
-    <div class="card">
-    <div class="icone">🏢</div>
-    <h3>Operações</h3>
-    <p>Custos, indicadores consolidados e análises relacionadas às operações.</p>
-    <a class="botao" href="operacoes.html">Acessar painel</a>
-</div>
-
-    </div>
+    </section>
 
   </main>
 
+
+  <!-- RODAPÉ -->
   <footer>
-    Portal de Painéis Operacionais
+
+    <span>
+      Portal de Painéis Operacionais
+    </span>
+
+    <span>
+      Central de indicadores
+    </span>
+
   </footer>
+
+
+  <!-- MENU MOBILE -->
+  <nav class="mobile-nav">
+
+    <a
+      href="#top"
+      class="active"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M3 11 12 4l9 7"></path>
+        <path d="M5 10v10h14V10"></path>
+      </svg>
+
+      Início
+
+    </a>
+
+
+    <a href="#paineis">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+      </svg>
+
+      Painéis
+
+    </a>
+
+
+    <a href="operacoes.html">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M3 21h18"></path>
+        <path d="M6 21V7l6-4 6 4v14"></path>
+      </svg>
+
+      Operações
+
+    </a>
+
+  </nav>
+
+
+  <script>
+
+    /* SAUDAÇÃO */
+
+    const hora =
+      new Date().getHours();
+
+    let saudacao =
+      "Bem-vindo";
+
+    if (hora >= 5 && hora < 12) {
+      saudacao = "Bom dia";
+    }
+
+    else if (
+      hora >= 12 &&
+      hora < 18
+    ) {
+      saudacao =
+        "Boa tarde";
+    }
+
+    else {
+      saudacao =
+        "Boa noite";
+    }
+
+    document
+      .getElementById("greeting")
+      .textContent =
+      saudacao;
+
+
+    /* DATA */
+
+    document
+      .getElementById("today")
+      .textContent =
+      new Date()
+        .toLocaleDateString(
+          "pt-BR",
+          {
+            weekday: "short",
+            day: "2-digit",
+            month: "short"
+          }
+        )
+        .replace(".", "");
+
+
+    /* BUSCA */
+
+    const search =
+      document.getElementById(
+        "search"
+      );
+
+    const clearSearch =
+      document.getElementById(
+        "clearSearch"
+      );
+
+    const cards =
+      [
+        ...document.querySelectorAll(
+          ".card"
+        )
+      ];
+
+    const noResults =
+      document.getElementById(
+        "noResults"
+      );
+
+    const panelCount =
+      document.getElementById(
+        "panelCount"
+      );
+
+
+    function filtrarPaineis() {
+
+      const termo =
+        search
+          .value
+          .trim()
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(
+            /[\u0300-\u036f]/g,
+            ""
+          );
+
+      let visiveis = 0;
+
+      cards.forEach(card => {
+
+        const texto =
+          (
+            card.innerText +
+            " " +
+            (
+              card.dataset.search ||
+              ""
+            )
+          )
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(
+              /[\u0300-\u036f]/g,
+              ""
+            );
+
+        const mostrar =
+          texto.includes(termo);
+
+        card.style.display =
+          mostrar
+            ? ""
+            : "none";
+
+        if (mostrar) {
+          visiveis++;
+        }
+
+      });
+
+
+      noResults.style.display =
+        visiveis
+          ? "none"
+          : "block";
+
+
+      panelCount.textContent =
+        visiveis === 1
+          ? "1 painel"
+          : `${visiveis} painéis`;
+
+
+      clearSearch.style.display =
+        search.value
+          ? "grid"
+          : "none";
+
+    }
+
+
+    search.addEventListener(
+      "input",
+      filtrarPaineis
+    );
+
+
+    clearSearch.addEventListener(
+      "click",
+      () => {
+
+        search.value = "";
+
+        filtrarPaineis();
+
+        search.focus();
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>
